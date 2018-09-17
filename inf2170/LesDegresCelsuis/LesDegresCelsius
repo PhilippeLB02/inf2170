@@ -1,0 +1,42 @@
+; ************************************************************
+;       Programme: LesDegresCelsius.TXT     version PEP813 sous Windows
+;
+;       version Final:
+;
+;       Mon programme convertis les degres Celsius demande en degre Fahrenheit.
+;
+;       auteur:   Philippe Lemay-Bourbeau -- LEMP02119605
+;       courriel: gd491077@ens.uqam.ca
+;       date:     automne 2018
+;       cours:    INF2170
+; ***********************************************************
+;
+
+          STRO    bienvenu,d  ; Message de bienvenue.
+;
+debut:    STRO    demande1,d  ; Deande d'entrer un degre celsuis
+          DECI    nombre1,d   ; Lecture du nombre entrer
+          BRV     debordem    ; Valeur de debordement du programme -50,0 et +50,0
+
+
+
+
+
+          BR      debut       ; recommence le processus
+;
+debordem: STRO    deborde,d   ; Message de debordement soit -50,0 et +50,0.
+correct:  BR      debut       ; recommence le processus
+;
+fin:      STRO    termine,d   ; Message de fin normal du programme
+          STOP
+;
+nombre1:  .BLOCK  2           ; #2d valeur intialiser a zero
+tempFah:  .BLOCK  2           ; #2d valeur intialiser a zero
+;
+bienvenu: .ASCII  "Bienvenue a ce programme qui convertis les degres celsuis en fahrenheit."
+          .ASCII  "\nVous devez entre une temperature entre -50,0 celsius et +50,0 celsius. \x00"
+demande1: .ASCII  "\n\n\nVeuillez entrez votre temperature. \x00"
+reponse:  .ASCII  "\nVotre temperature est \x00"
+deborde:  .ASCII  "\nVotre temperature excede le minimum permis -50,0 ou le maximum permis +50,0 \x00"
+termine:  .ASCII  "\nFin normal du programme. \x00"
+          .END
