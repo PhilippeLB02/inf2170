@@ -14,14 +14,42 @@
 
           STRO    bienvenu,d  ; Message de bienvenue.
 ;
-debut:    STRO    demande1,d  ; Deande d'entrer un degre celsuis
+debut:    STRO    demande1,d  ; Demande d'entrer un degre celsuis
           DECI    nombre1,d   ; Lecture du nombre entrer
-          BRV     debordem    ; Valeur de debordement du programme -50,0 et +50,0
+          CPA     -50,i       ; Valeur de debordement du programme -50,0 et +50,0
+          BR      debordem    ;
+          CPA     50,i        ;
+          BR      debordem    ;
+;Multiplication
+          LDA     nombre1,d
+          ASLA                ;*2
+          ASLA                ;*4
+          ASLA                ;*8
+          ADDA    nombre1,d   ;*9
+          STA     nb9,d       ;nombre*9
+;Division
+          LDA     nb9,d       ;nb9/5
+          BRGE    positif
+          NEGA
+positif:  LDX     0,i
+soustrai: ADDX    1,i
+          SUBA    5,i
+          BRGE    soustrai
+;
+;
+          SUBX    1,i         ; soustrait une fois de trop
+          ADDA    5,i
+          STA     reste,d     ; reste pour l ajustement
+          LDBYTEA signe,d
+          STX     nb9/5,d
 
+;Addition
+          LDA     nb9/5,d
+          ADDA    32,i
+          STA     tempFah,d
 
-
-
-
+;Affichage temp
+          STRO    tempFah,d
           BR      debut       ; recommence le processus
 ;
 debordem: STRO    deborde,d   ; Message de debordement soit -50,0 et +50,0.
@@ -31,6 +59,9 @@ fin:      STRO    termine,d   ; Message de fin normal du programme
           STOP
 ;
 nombre1:  .BLOCK  2           ; #2d valeur intialiser a zero
+nb9:      .BLOCK  2           ; #2d
+reste:    .BLOCK  2           ; #2d
+nb9/5:    .BLOCK  2           ; #2d
 tempFah:  .BLOCK  2           ; #2d valeur intialiser a zero
 ;
 bienvenu: .ASCII  "Bienvenue a ce programme qui convertis les degres celsuis en fahrenheit."
